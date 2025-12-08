@@ -1,0 +1,57 @@
+/* src/assets/base.css */
+:root {
+    --primary: #8fa889;
+    /* 核心绿色 */
+    --primary-light: #e0e6de;
+    /* 浅绿色背景 */
+    --text-main: #333;
+    --text-light: #888;
+    --bg-gray: #f9f9f9;
+    --white: #ffffff;
+}
+
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: var(--bg-gray);
+    color: var(--text-main);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 通用布局类 */
+.container {
+    padding: 20px;
+    padding-bottom: 80px;
+    /* 给底部导航留空 */
+}
+
+.btn {
+    background: var(--primary-light);
+    border: 1px solid var(--primary);
+    border-radius: 20px;
+    padding: 10px 20px;
+    width: 100%;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 15px;
+}
+
+/* 隐藏滚动条但允许滚动 */
+.scroll-x {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding-bottom: 5px;
+}
+
+.scroll-x::-webkit-scrollbar {
+    display: none;
+}
