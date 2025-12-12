@@ -1,142 +1,229 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { Sparkles, Scissors, ArrowLeft } from "lucide-vue-next";
+import { ArrowLeft, Copy, Sparkles, Scissors } from "lucide-vue-next";
+import { ref } from "vue";
+
 const route = useRoute();
 const router = useRouter();
+const showCopied = ref(false);
 
-// 模拟跳转到功能页，实际中可以携带 query: { productId: route.params.id }
-const goStyling = () => router.push('/styling-tips') // 跳转到图一
-const goUpcycling = () => router.push('/upcycling-list') // 跳转到图二
+const goHome = () => router.push("/");
+
+const copyId = () => {
+  navigator.clipboard.writeText(route.params.id);
+  showCopied.value = true;
+  setTimeout(() => (showCopied.value = false), 2000);
+};
+
+const goStyling = () => router.push("/styling-tips");
+const goUpcycling = () => router.push("/upcycling-list");
 </script>
 
 <template>
   <div class="page-content">
-    <div class="page-header">
-      <button class="back-btn" @click="router.push('/')">
-        <ArrowLeft :size="20" color="#333" />
+    <!-- 顶部导航 -->
+    <header class="top-nav">
+      <button class="back-btn" @click="goHome">
+        <ArrowLeft :size="24" color="#1A202C" />
       </button>
-      <div class="header-text">
-        <h2>Product #{{ route.params.id }}</h2>
-        <p>Current Item Dashboard</p>
-      </div>
-    </div>
+      <h1 class="page-title">Product</h1>
+      <div class="placeholder"></div>
+    </header>
 
-    <!-- 主图 -->
-    <div class="product-hero">
+    <!-- 产品大图 -->
+    <div class="product-display">
       <img
-        src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600"
+        src="https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&q=80"
+        alt="Denim Jacket"
       />
-      <div class="status-tag"><span class="dot"></span> Active Item</div>
     </div>
 
-    <!-- 修复后的功能按钮 -->
-    <div class="actions-row">
-      <div class="action-btn" @click="goStyling">
-        <div class="icon-box"><Sparkles :size="24" /></div>
-        <span>Get styling tips</span>
+    <!-- 产品 ID -->
+    <div class="product-id-row" @click="copyId">
+      <span>Product ID #{{ route.params.id }}</span>
+      <div class="copy-icon">
+        <Copy :size="18" color="#5F7A63" />
       </div>
-      <div class="action-btn outline" @click="goUpcycling">
-        <div class="icon-box"><Scissors :size="24" /></div>
-        <span>View upcycling guide</span>
+      <transition name="fade">
+        <span v-if="showCopied" class="copied-toast">Copied!</span>
+      </transition>
+    </div>
+
+    <!-- 功能按钮组 -->
+    <div class="action-buttons">
+      <!-- 左侧按钮：圆在左下角 -->
+      <div class="card-btn styling" @click="goStyling">
+        <!-- 背景圆 -->
+        <div class="bg-shape circle-bl"></div>
+        <div class="card-content">
+          <Sparkles :size="28" color="white" stroke-width="1.5" />
+          <span>Styling tips</span>
+        </div>
+      </div>
+
+      <!-- 右侧按钮：圆在右上角 -->
+      <div class="card-btn upcycling" @click="goUpcycling">
+        <!-- 背景圆 -->
+        <div class="bg-shape circle-tr"></div>
+        <div class="card-content">
+          <Scissors :size="28" color="white" stroke-width="1.5" />
+          <span>Upcycling guides</span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.page-header {
+.page-content {
+  background: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 24px;
+}
+
+/* Top Nav */
+.top-nav {
   display: flex;
   align-items: center;
-  margin-bottom: 24px;
-  position: relative;
+  justify-content: space-between;
+  height: 60px;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 .back-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 44px;
+  height: 44px;
   background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border: 1px solid #f0f0f0;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  left: 0;
-  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
 }
-.header-text {
-  flex: 1;
-  text-align: center;
+.page-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a202c;
 }
-.header-text h2 {
-  font-size: 20px;
+.placeholder {
+  width: 44px;
 }
 
-.product-hero {
-  position: relative;
-  border-radius: 24px;
-  overflow: hidden;
-  height: 340px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
-}
-.product-hero img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.status-tag {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 8px 16px;
-  border-radius: 30px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #2d3748;
+/* Product Display */
+.product-display {
+  flex: 1;
   display: flex;
   align-items: center;
-  gap: 6px;
-  backdrop-filter: blur(4px);
+  justify-content: center;
+  margin-bottom: 20px;
 }
-.dot {
-  width: 8px;
-  height: 8px;
-  background: #4caf50;
-  border-radius: 50%;
+.product-display img {
+  width: 80%;
+  max-width: 300px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.1));
 }
 
-.actions-row {
+/* ID Row */
+.product-id-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #4a5568;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 40px;
+  cursor: pointer;
+  position: relative;
+}
+.copied-toast {
+  position: absolute;
+  top: -30px;
+  background: #2d3748;
+  color: white;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Action Buttons */
+.action-buttons {
   display: flex;
   gap: 16px;
+  margin-bottom: 50px; /* 底部距离，因为没有导航栏了，可以留少一点或者多一点视情况而定 */
 }
-.action-btn {
+
+.card-btn {
   flex: 1;
-  padding: 20px;
+  height: 110px;
   border-radius: 20px;
+  position: relative;
+  overflow: hidden; /* 裁剪圆形 */
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+.card-btn:active {
+  transform: scale(0.97);
+}
+
+/* 背景颜色 */
+.styling {
+  background-color: #768e73;
+}
+.upcycling {
+  background-color: #333f4f;
+}
+
+/* 核心：背景圆装饰 */
+.bg-shape {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15); /* 半透明白色 */
+  pointer-events: none;
+}
+
+/* 左侧按钮：左下角 1/4 圆 */
+.circle-bl {
+  width: 140px;
+  height: 140px;
+  bottom: -40px;
+  left: -40px;
+}
+
+/* 右侧按钮：右上角 稍微偏移 */
+.circle-tr {
+  width: 160px;
+  height: 160px;
+  top: -60px;
+  right: -30px;
+}
+
+.card-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 10px;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.1s;
-}
-.action-btn:active {
-  transform: scale(0.98);
-}
-.action-btn {
-  background: #8fa889;
   color: white;
-  box-shadow: 0 8px 20px rgba(143, 168, 137, 0.3);
-}
-.action-btn.outline {
-  background: white;
-  color: #333;
-  border: 2px solid #e8efe9;
-  box-shadow: none;
-}
-.action-btn.outline .icon-box {
-  color: #8fa889;
+  font-weight: 600;
+  font-size: 14px;
 }
 </style>

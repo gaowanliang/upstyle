@@ -1,122 +1,64 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
-import { ArrowLeft } from "lucide-vue-next";
+import { ArrowLeft, Heart, SlidersHorizontal } from "lucide-vue-next";
 
 const router = useRouter();
-const activeCat = ref("Casual");
-const categories = ["Casual", "Outdoor", "Professional", "Party"];
+const activeCat = ref("All");
+const categories = [
+  "All",
+  "Casual",
+  "Outdoor",
+  "Professional",
+  "Party",
+  "Vintage"
+];
 
-// 定义每个类别的详细数据
-const allData = {
-  Casual: [
-    {
-      id: 101,
-      title: "Relaxed Denim Fit",
-      sub: "Everyday comfort",
-      img: "https://images.unsplash.com/photo-1685875018148-6ac6d41b7c4e?w=200"
-    },
-    {
-      id: 102,
-      title: "Classic White Tee",
-      sub: "Wardrobe staple",
-      img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200"
-    },
-    {
-      id: 103,
-      title: "Oversized Hoodie",
-      sub: "Cozy vibes",
-      img: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=200"
-    },
-    {
-      id: 104,
-      title: "Canvas Tote Style",
-      sub: "Practical & Chic",
-      img: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=200"
-    }
-  ],
-  Outdoor: [
-    {
-      id: 201,
-      title: "Waterproof Layers",
-      sub: "Rain ready",
-      img: "https://images.unsplash.com/photo-1506619216599-9d16d0903dfd?w=200"
-    },
-    {
-      id: 202,
-      title: "Hiking Boots Guide",
-      sub: "Trail essentials",
-      img: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=200"
-    },
-    {
-      id: 203,
-      title: "Thermal Beanie",
-      sub: "Keep warm",
-      img: "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=200"
-    },
-    {
-      id: 204,
-      title: "Backpack Packing",
-      sub: "Travel light",
-      img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=200"
-    }
-  ],
-  Professional: [
-    {
-      id: 301,
-      title: "Structured Blazer",
-      sub: "Office power",
-      img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=200"
-    },
-    {
-      id: 302,
-      title: "Silk Scarf Knot",
-      sub: "Elegant touch",
-      img: "https://images.unsplash.com/photo-1584030373081-f37b7bb4fa8e?w=200"
-    },
-    {
-      id: 303,
-      title: "Tailored Trousers",
-      sub: "Perfect fit",
-      img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=200"
-    },
-    {
-      id: 304,
-      title: "Minimalist Watch",
-      sub: "Timepiece",
-      img: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=200"
-    }
-  ],
-  Party: [
-    {
-      id: 401,
-      title: "Velvet Dress",
-      sub: "Night out",
-      img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=200"
-    },
-    {
-      id: 402,
-      title: "Statement Earrings",
-      sub: "Bold accessories",
-      img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=200"
-    },
-    {
-      id: 403,
-      title: "High Heels Hack",
-      sub: "Comfort tips",
-      img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=200"
-    },
-    {
-      id: 404,
-      title: "Clutch Bag Pairing",
-      sub: "Essential carry",
-      img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=200"
-    }
-  ]
-};
+// 模拟数据 (模拟图中展示的男士牛仔穿搭)
+const allData = [
+  {
+    id: 1,
+    title: "Denim & Black Trousers Clean Outfit",
+    category: "Casual",
+    img: "https://images.unsplash.com/photo-1512760206180-2d09c30f40f0?w=600&q=80" // 牛仔外套+黑裤
+  },
+  {
+    id: 2,
+    title: "Relaxed Denim, Beige Pants",
+    category: "Casual",
+    img: "https://images.unsplash.com/photo-1542842400-0e7d5893e387?w=600&q=80" // 牛仔+米色裤
+  },
+  {
+    id: 3,
+    title: "Denim & Pleated Khaki",
+    category: "Outdoor",
+    img: "https://images.unsplash.com/photo-1617137968427-85924c809a10?w=600&q=80" // 全身牛仔/工装
+  },
+  {
+    id: 4,
+    title: "Jacket & Navy Tones",
+    category: "Professional",
+    img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&q=80" // 蓝色系
+  },
+  {
+    id: 5,
+    title: "Layered Hoodie Style",
+    category: "Casual",
+    img: "https://images.unsplash.com/photo-1515555230216-82228b88ea98?w=600&q=80"
+  },
+  {
+    id: 6,
+    title: "Smart Casual Look",
+    category: "Professional",
+    img: "https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=600&q=80"
+  }
+];
 
-// 计算当前显示的列表
-const currentItems = computed(() => allData[activeCat.value]);
+// 筛选逻辑
+const currentItems = computed(() => {
+  if (activeCat.value === "All") return allData;
+  return allData.filter((item) => item.category === activeCat.value);
+});
 
 const goToDetail = (id) => {
   router.push(`/detail/${id}`);
@@ -125,48 +67,49 @@ const goToDetail = (id) => {
 
 <template>
   <div class="page-content">
-    <div class="nav-header">
+    <!-- 1. 顶部导航 -->
+    <header class="top-nav">
       <button class="back-btn" @click="router.back()">
-        <ArrowLeft :size="24" color="#333" />
+        <ArrowLeft :size="24" color="#1A202C" />
       </button>
-      <h2>Get styling tips</h2>
-      <div style="width: 24px"></div>
-    </div>
+      <h1 class="page-title">Styling tips</h1>
+      <div class="placeholder"></div>
+    </header>
 
-    <!-- 类别筛选 -->
-    <div class="category-row">
-      <div
-        v-for="cat in categories"
-        :key="cat"
-        class="cat-item"
-        @click="activeCat = cat"
-      >
-        <div class="cat-circle" :class="{ active: activeCat === cat }">
-          <div class="inner-dot" v-if="activeCat === cat"></div>
-        </div>
-        <span>{{ cat }}</span>
+    <!-- 2. 筛选栏 (胶囊 + 筛选图标) -->
+    <div class="filter-section">
+      <div class="chips-scroll">
+        <button
+          v-for="cat in categories"
+          :key="cat"
+          class="chip"
+          :class="{ active: activeCat === cat }"
+          @click="activeCat = cat"
+        >
+          {{ cat }}
+        </button>
       </div>
     </div>
 
-    <!-- 列表内容 (带动画) -->
-    <div class="tips-list">
+    <!-- 3. 瀑布流列表 -->
+    <div class="masonry-grid">
       <transition-group name="fade">
         <div
-          class="list-card"
+          class="grid-item"
           v-for="item in currentItems"
           :key="item.id"
           @click="goToDetail(item.id)"
         >
-          <div class="thumb">
-            <img :src="item.img" />
+          <div class="img-wrapper">
+            <img :src="item.img" loading="lazy" />
+            <!-- 爱心收藏按钮 -->
+            <button class="heart-btn" @click.stop>
+              <Heart :size="18" color="white" />
+            </button>
           </div>
-          <div class="info">
+
+          <div class="card-info">
             <h4 class="item-title">{{ item.title }}</h4>
-            <span class="item-sub">{{ item.sub }}</span>
-          </div>
-          <!-- 模拟开关/进入按钮 -->
-          <div class="toggle-btn">
-            <div class="toggle-pill"></div>
           </div>
         </div>
       </transition-group>
@@ -175,136 +118,158 @@ const goToDetail = (id) => {
 </template>
 
 <style scoped>
-.nav-header {
+.page-content {
+  background: #ffffff;
+  min-height: 100vh;
+  padding: 0 20px 40px 20px;
+}
+
+/* --- Top Nav --- */
+.top-nav {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  justify-content: space-between;
+  height: 60px;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 .back-btn {
+  width: 44px;
+  height: 44px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f0f0f0;
+  cursor: pointer;
+}
+.page-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a202c;
+}
+.placeholder {
+  width: 44px;
+}
+
+/* --- Filter Section --- */
+.filter-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.chips-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  flex: 1;
+  padding-bottom: 4px; /* 防止滚动条遮挡 */
+  scrollbar-width: none; /* Firefox */
+}
+.chips-scroll::-webkit-scrollbar {
+  display: none;
+} /* Chrome/Safari */
+
+.chip {
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+/* 选中态：深绿背景白字 */
+.chip.active {
+  background: #5f7a63;
+  color: white;
+}
+/* 未选中态：浅绿背景深字 */
+.chip:not(.active) {
+  background: #e8efe9;
+  color: #768e73;
+}
+
+.filter-icon-btn {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
   background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  border: 1px solid #f0f0f0;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.category-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 40px;
-  padding: 0 10px;
-}
-.cat-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-}
-.cat-circle {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #f0f2ef;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s;
-  border: 1px solid transparent;
-}
-.cat-circle.active {
-  background: #8fa889;
-  box-shadow: 0 4px 12px rgba(143, 168, 137, 0.3);
-}
-.inner-dot {
-  width: 10px;
-  height: 10px;
-  background: white;
-  border-radius: 50%;
-}
-.cat-item span {
-  font-size: 12px;
-  color: #888;
-  font-weight: 500;
-}
-.cat-item:hover span {
-  color: #8fa889;
-}
-
-.tips-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.list-card {
-  background: white;
-  border-radius: 20px;
-  padding: 12px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-  transition: transform 0.2s;
-}
-.list-card:active {
-  transform: scale(0.98);
-}
-
-.thumb {
-  width: 56px;
-  height: 56px;
-  background: #f0f2ef;
-  border-radius: 14px;
-  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   flex-shrink: 0;
 }
-.thumb img {
+
+/* --- Masonry Grid --- */
+.masonry-grid {
+  column-count: 2;
+  column-gap: 16px;
+}
+.grid-item {
+  break-inside: avoid;
+  background: white;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid #f7f7f7;
+}
+
+.img-wrapper {
+  position: relative;
+  background: #f4f4f4;
+  overflow: hidden;
+}
+.img-wrapper img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  display: block;
 }
 
-.info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.item-title {
-  margin: 0 0 4px;
-  font-size: 15px;
-  color: #2d3748;
-}
-.item-sub {
-  font-size: 12px;
-  color: #a0aec0;
-}
-
-.toggle-btn {
-  width: 44px;
-  height: 24px;
-  background: #8fa889;
-  border-radius: 12px;
+/* 悬浮爱心 */
+.heart-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  border: none;
   display: flex;
   align-items: center;
-  padding: 2px;
-  box-sizing: border-box;
-}
-.toggle-pill {
-  width: 12px;
-  height: 4px;
-  background: white;
-  border-radius: 2px;
-  margin: 0 auto;
+  justify-content: center;
+  backdrop-filter: blur(4px);
 }
 
-/* 简单的过渡动画 */
+/* 右下角装饰 */
+.sparkle-decor {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+}
+
+.card-info {
+  padding: 12px;
+}
+.item-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a202c;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* 动画 */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;

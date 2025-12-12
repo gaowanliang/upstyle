@@ -2,154 +2,324 @@
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/auth";
-import MasonryGrid from "../components/MasonryGrid.vue";
+import { Heart } from "lucide-vue-next";
+import { useSimpleToast } from "../composables/useSimpleToast"; // 引入弹窗
 
 const router = useRouter();
 const auth = useAuthStore();
+const { triggerToast } = useSimpleToast(); // 初始化弹窗
 
-// 鉴权
-if (!auth.isLoggedIn) router.push("/login");
+// 鉴权：未登录跳转
+if (!auth.isLoggedIn) {
+  router.push("/login");
+}
 
-const activeTab = ref("styling");
-const tabs = [
-  { id: "inspection", label: "Inspection" },
-  { id: "styling", label: "Styling tips" },
-  { id: "upcycle", label: "Upcycle tutorials" }
-];
+// Tab 状态
+const activeTab = ref("styling"); // 'styling' | 'upcycling'
 
-// --- 不同类别的 Mock 数据 ---
-const allData = {
-  inspection: [
-    {
-      id: 1,
-      user: "Admin",
-      title: "Quality Check #22",
-      img: "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=300"
-    },
-    {
-      id: 2,
-      user: "Admin",
-      title: "Material Scan",
-      img: "https://images.unsplash.com/photo-1584030373081-f37b7bb4fa8e?w=300"
-    }
-  ],
-  styling: [
-    {
-      id: 3,
-      user: "Sarah",
-      title: "Summer Vibe",
-      img: "https://images.unsplash.com/photo-1603570784360-7c00ee305d5e?q=80&w=300"
-    },
-    {
-      id: 4,
-      user: "Mike",
-      title: "Office Look",
-      img: "https://plus.unsplash.com/premium_photo-1675186049222-0b5018db6ce9?w=300"
-    },
-    {
-      id: 5,
-      user: "Emma",
-      title: "Party Dress",
-      img: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=300"
-    }
-  ],
-  upcycle: [
-    {
-      id: 6,
-      user: "EcoLife",
-      title: "DIY Tote Bag",
-      img: "https://images.unsplash.com/photo-1578237493287-8d4d2b03591a?w=300"
-    },
-    {
-      id: 7,
-      user: "Green",
-      title: "Plant Pot",
-      img: "https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=300"
-    }
-  ]
+// 1. Styling Tips 数据 (对应第一张图：穿搭) -> 改为 ref 并添加 liked: true
+const stylingData = ref([
+  {
+    id: 101,
+    title: "Denim & Pleated Khaki",
+    img: "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?w=600&q=80", // 牛仔外套+卡其裤
+    liked: true
+  },
+  {
+    id: 102,
+    title: "Contrast Layering with Khaki",
+    img: "https://images.unsplash.com/photo-1617137968427-85924c809a10?w=600&q=80", // 绿色衬衫
+    liked: true
+  },
+  {
+    id: 103,
+    title: "Lightweight Down, Big Warmth",
+    img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&q=80", // 灰色外套
+    liked: true
+  },
+  {
+    id: 104,
+    title: "Blue Vintage Varsity Pullover",
+    img: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&q=80", // 蓝色卫衣
+    liked: true
+  }
+]);
+
+// 2. Upcycling Guides 数据 (对应第二张图：改造) -> 改为 ref 并添加 liked: true
+const upcyclingData = ref([
+  {
+    id: 201,
+    title: "Denim wallet",
+    user: "Murzka",
+    avatar: "https://randomuser.me/api/portraits/women/12.jpg",
+    img: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=600&q=80",
+    badge: "Beginner friendly",
+    liked: true
+  },
+  {
+    id: 202,
+    title: "Suit pants",
+    user: "Raw",
+    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+    img: "https://images.unsplash.com/photo-1479064555552-3ef4979f8908?w=600&q=80",
+    badge: null,
+    liked: true
+  },
+  {
+    id: 203,
+    title: "Embroidery Art",
+    user: "Annabelle Beer",
+    avatar: "https://randomuser.me/api/portraits/women/65.jpg",
+    img: "https://images.unsplash.com/photo-1542272617-08f086303b96?w=600&q=80", // 卫衣领口刺绣
+    badge: null,
+    liked: true
+  },
+  {
+    id: 204,
+    title: "Denim Jacket Cuff with Sweater Patchwork",
+    user: "Estella Pacocha",
+    avatar: "https://randomuser.me/api/portraits/women/68.jpg",
+    img: "https://images.unsplash.com/photo-1542272617-08f086303b96?w=600&q=80", // 牛仔拼毛衣
+    badge: null,
+    liked: true
+  }
+]);
+
+const goToDetail = (id) => {
+  router.push(`/detail/${id}`);
 };
 
-const currentItems = computed(() => allData[activeTab.value]);
+// 切换收藏状态
+const toggleLike = (item) => {
+  item.liked = !item.liked;
+  triggerToast(item.liked ? "Added to favorites" : "Removed from favorites");
+};
 </script>
 
 <template>
   <div class="page-content">
-    <h2 class="page-title">Favorites</h2>
+    <!-- Header -->
+    <header class="page-header">
+      <h1>Favorite</h1>
+    </header>
 
     <!-- Tabs -->
-    <div class="tabs-wrapper">
+    <div class="tabs-bar">
       <div
-        v-for="tab in tabs"
-        :key="tab.id"
         class="tab-item"
-        @click="activeTab = tab.id"
+        :class="{ active: activeTab === 'styling' }"
+        @click="activeTab = 'styling'"
       >
-        <div class="circle-indicator" :class="{ active: activeTab === tab.id }">
-          <div class="inner-dot"></div>
-        </div>
-        <span :class="{ 'active-text': activeTab === tab.id }">
-          {{ tab.label }}
-        </span>
+        Styling tips
+      </div>
+      <div
+        class="tab-item"
+        :class="{ active: activeTab === 'upcycling' }"
+        @click="activeTab = 'upcycling'"
+      >
+        Upcycling guides
       </div>
     </div>
 
-    <!-- 瀑布流：强制 isLiked=true -->
-    <MasonryGrid :items="currentItems" :isLiked="true" />
+    <!-- Content List -->
+    <div class="masonry-grid">
+      <!-- 场景 A: Styling Tips -->
+      <template v-if="activeTab === 'styling'">
+        <div
+          v-for="item in stylingData"
+          :key="item.id"
+          class="grid-card styling-card"
+          @click="goToDetail(item.id)"
+        >
+          <div class="img-wrapper">
+            <img :src="item.img" loading="lazy" />
+            <div class="heart-btn" @click.stop="toggleLike(item)">
+              <!-- 动态爱心 -->
+              <Heart
+                :size="18"
+                :fill="item.liked ? '#E53E3E' : 'none'"
+                :color="item.liked ? '#E53E3E' : 'white'"
+              />
+            </div>
+          </div>
+          <div class="card-info">
+            <h3 class="simple-title">{{ item.title }}</h3>
+          </div>
+        </div>
+      </template>
+
+      <!-- 场景 B: Upcycling Guides -->
+      <template v-else>
+        <div
+          v-for="item in upcyclingData"
+          :key="item.id"
+          class="grid-card upcycle-card"
+          @click="goToDetail(item.id)"
+        >
+          <div class="img-wrapper">
+            <img :src="item.img" loading="lazy" />
+            <div class="heart-btn" @click.stop="toggleLike(item)">
+              <!-- 动态爱心 -->
+              <Heart
+                :size="18"
+                :fill="item.liked ? '#E53E3E' : 'none'"
+                :color="item.liked ? '#E53E3E' : 'white'"
+              />
+            </div>
+            <!-- Beginner Badge -->
+            <div v-if="item.badge" class="badge-pill">
+              {{ item.badge }}
+            </div>
+          </div>
+
+          <div class="card-info">
+            <div class="user-row">
+              <img :src="item.avatar" class="avatar" />
+              <span class="username">{{ item.user }}</span>
+            </div>
+            <h3 class="complex-title">{{ item.title }}</h3>
+          </div>
+        </div>
+      </template>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.page-title {
-  text-align: center;
-  color: #8fa889;
-  margin-bottom: 30px;
+.page-content {
+  background: #fafafa;
+  min-height: 100vh;
+  padding-bottom: 100px; /* 留给底部导航 */
 }
 
-.tabs-wrapper {
+/* Header */
+.page-header {
+  padding: 20px 0;
+  text-align: center;
+  background: #fafafa;
+}
+.page-header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0;
+}
+
+/* Tabs */
+.tabs-bar {
   display: flex;
-  justify-content: space-around;
-  margin-bottom: 32px;
+  background: #fafafa;
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 .tab-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  flex: 1;
+  text-align: center;
+  padding: 14px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #a0aec0;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s;
+}
+.tab-item.active {
+  color: #5f7a63; /* 选中后的深绿色文字 */
+  border-bottom-color: #5f7a63; /* 选中后的深绿色下划线 */
+}
+
+/* Masonry Grid */
+.masonry-grid {
+  padding: 20px;
+  column-count: 2;
+  column-gap: 16px;
+}
+
+.grid-card {
+  break-inside: avoid;
+  background: white;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
   cursor: pointer;
 }
 
-.circle-indicator {
-  width: 24px;
-  height: 24px;
+/* Image Wrapper (Common) */
+.img-wrapper {
+  position: relative;
+  background: #f4f4f4;
+}
+.img-wrapper img {
+  width: 100%;
+  display: block;
+}
+
+/* Red Heart Button (Fixed Top Right) */
+.heart-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  background: rgba(0, 0, 0, 0.25); /* 半透明黑底 */
   border-radius: 50%;
-  border: 2px solid #e2e8f0;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s;
-}
-.circle-indicator.active {
-  border-color: #8fa889;
-}
-.inner-dot {
-  width: 0;
-  height: 0;
-  background: #8fa889;
-  border-radius: 50%;
-  transition: all 0.3s;
-}
-.circle-indicator.active .inner-dot {
-  width: 14px;
-  height: 14px;
+  backdrop-filter: blur(2px);
 }
 
-.tab-item span {
-  font-size: 12px;
-  color: #888;
-  transition: color 0.3s;
+/* --- Styling Tips Card Specifics --- */
+.styling-card .card-info {
+  padding: 12px;
 }
-.tab-item span.active-text {
-  color: #8fa889;
+.simple-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* --- Upcycling Card Specifics --- */
+.upcycle-card .card-info {
+  padding: 12px;
+}
+.badge-pill {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(232, 239, 233, 0.95);
+  color: #5f7a63;
+  font-size: 10px;
   font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.user-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+.username {
+  font-size: 11px;
+  color: #718096;
+}
+.complex-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0;
+  line-height: 1.4;
 }
 </style>
