@@ -28,7 +28,7 @@ const stylingData = ref([
   {
     id: 102,
     title: "Contrast Layering with Khaki",
-    img: "https://images.unsplash.com/photo-1617137968427-85924c809a10?w=600&q=80", // 绿色衬衫
+    img: "https://images.unsplash.com/photo-1530856021941-02c71be5926f?w=600&q=80", // 绿色衬衫
     liked: true
   },
   {
@@ -70,7 +70,7 @@ const upcyclingData = ref([
     title: "Embroidery Art",
     user: "Annabelle Beer",
     avatar: "https://randomuser.me/api/portraits/women/65.jpg",
-    img: "https://images.unsplash.com/photo-1542272617-08f086303b96?w=600&q=80", // 卫衣领口刺绣
+    img: "https://images.unsplash.com/photo-1734873741744-759ea0a3b3e5?w=600&q=80", // 卫衣领口刺绣
     badge: null,
     liked: true
   },
@@ -79,7 +79,7 @@ const upcyclingData = ref([
     title: "Denim Jacket Cuff with Sweater Patchwork",
     user: "Estella Pacocha",
     avatar: "https://randomuser.me/api/portraits/women/68.jpg",
-    img: "https://images.unsplash.com/photo-1542272617-08f086303b96?w=600&q=80", // 牛仔拼毛衣
+    img: "https://images.unsplash.com/photo-1660166445759-c69bb6e7f004?w=600&q=80", // 牛仔拼毛衣
     badge: null,
     liked: true
   }

@@ -11,7 +11,7 @@ const guides = [
     title: "Denim tote",
     user: "W CONCEPT",
     avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-    img: "https://images.unsplash.com/photo-1590874102058-592535d7885e?w=600&q=80",
+    img: "https://images.unsplash.com/photo-1683148754073-cfa906017a10?w=400&q=80",
     badge: null
   },
   {
@@ -19,7 +19,7 @@ const guides = [
     title: "Denim Jacket Cuff with Sweater Patchwork",
     user: "Estella Pacocha",
     avatar: "https://randomuser.me/api/portraits/women/68.jpg",
-    img: "https://images.unsplash.com/photo-1542272617-08f086303b96?w=600&q=80",
+    img: "https://images.unsplash.com/photo-1660166445759-c69bb6e7f004?w=600&q=80",
     badge: null
   },
   {
@@ -27,7 +27,7 @@ const guides = [
     title: "Denim pocket organizer",
     user: "Amara",
     avatar: "https://randomuser.me/api/portraits/women/33.jpg",
-    img: "https://images.unsplash.com/photo-1605763240004-7e93b172d754?w=600&q=80", // 类似收纳袋
+    img: "https://images.unsplash.com/photo-1762083589001-eb5591b3fb17?w=600&q=80", // 类似收纳袋
     badge: null
   },
   {

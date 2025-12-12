@@ -15,7 +15,7 @@ const inspirations = ref([
     title: "Denim tote bag",
     user: "Anna_Style",
     avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-    img: "https://images.unsplash.com/photo-1590874102058-592535d7885e?w=600&q=80",
+    img: "https://images.unsplash.com/photo-1683148754073-cfa906017a10?w=600&q=80",
     badge: null,
     liked: false
   },
@@ -33,7 +33,7 @@ const inspirations = ref([
     title: "Embroidery on Denim",
     user: "SarahC",
     avatar: "https://randomuser.me/api/portraits/women/68.jpg",
-    img: "https://images.unsplash.com/photo-1542272617-08f086303b96?w=600&q=80",
+    img: "https://images.unsplash.com/photo-1466027449668-27f96b692ba4?w=600&q=80",
     badge: null,
     liked: false
   },
@@ -87,7 +87,7 @@ const inspirations = ref([
     title: "Fabric Scrap Accessories",
     user: "ZeroWaste",
     avatar: "https://randomuser.me/api/portraits/women/33.jpg",
-    img: "https://images.unsplash.com/photo-1520412092562-1e61229183b7?w=600&q=80",
+    img: "https://images.unsplash.com/photo-1684766933106-fb7fec5b90e4?w=600&q=80",
     badge: "Beginner friendly",
     liked: false
   },
@@ -96,7 +96,7 @@ const inspirations = ref([
     title: "Hand Painted Jacket",
     user: "DesignDaily",
     avatar: "https://randomuser.me/api/portraits/men/85.jpg",
-    img: "https://images.unsplash.com/photo-1559563458-52c69f8f1f66?w=600&q=80",
+    img: "https://images.unsplash.com/photo-1570904153053-82e152257512?w=600&q=80",
     badge: "Advanced",
     liked: false
   },
@@ -105,7 +105,7 @@ const inspirations = ref([
     title: "Macrame Plant Hanger",
     user: "PlantDad",
     avatar: "https://randomuser.me/api/portraits/men/22.jpg",
-    img: "https://images.unsplash.com/photo-1599596956247-4187284b3d8d?w=600&q=80",
+    img: "https://images.unsplash.com/photo-1691748260255-5394f0c8cdfd?w=600&q=80",
     badge: null,
     liked: false
   },

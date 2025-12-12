@@ -19,7 +19,7 @@ const slides = [
   {
     title: "Transform your wardrobe",
     sub: "Style smarter. Waste less.",
-    img: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80"
+    img: "https://i.imgur.com/tbDS9gm.jpeg"
   },
   {
     title: "New Season Trends",
@@ -29,7 +29,7 @@ const slides = [
   {
     title: "Upcycle Your Denim",
     sub: "DIY Guide",
-    img: "https://images.unsplash.com/photo-1542272617-08f086303b96?w=800&q=80"
+    img: "https://images.unsplash.com/photo-1515459961680-58264ee27219?w=800&q=80"
   }
 ];
 let timer = null;
@@ -48,7 +48,7 @@ const inspirationItems = ref([
     title: "Denim tote",
     user: "Amara",
     avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-    img: "https://images.unsplash.com/photo-1590874102058-592535d7885e?w=400&q=80",
+    img: "https://images.unsplash.com/photo-1683148754073-cfa906017a10?w=400&q=80",
     badge: false,
     liked: false
   },
@@ -157,7 +157,7 @@ const toggleLike = (item) => {
         <input
           v-model="searchInput"
           type="text"
-          placeholder="e.g. 4545677232"
+          placeholder="e.g. 123456"
           @keydown.enter="handleSearch"
         />
         <button class="search-btn" @click="handleSearch">

@@ -9,7 +9,7 @@ const items = [
     id: 1,
     title: "Denim Layering",
     sub: "Best for: Cool weather",
-    img: "https://images.unsplash.com/photo-1542272617-08f086303b96?w=200&q=80"
+    img: "https://images.unsplash.com/photo-1622932558467-be64fd99722c?w=200&q=80"
   },
   {
     id: 2,

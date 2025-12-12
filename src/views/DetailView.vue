@@ -14,7 +14,7 @@ const stylingDB = [
     id: 1,
     title: "Denim & Black Trousers Clean Outfit",
     desc: "A clean, urban look featuring a dark utility denim jacket layered over a striped shirt and white tee. Paired with relaxed black trousers and finished with white sneakers for a refined, balanced silhouette.",
-    img: "https://images.unsplash.com/photo-1512760206180-2d09c30f40f0?w=800&q=80",
+    img: "https://images.unsplash.com/photo-1587664289285-e6fb47cbe370?w=600&q=80",
     attrs: [
       { label: "Mid-layer", value: "Blue & White Stripe Shirt" },
       { label: "Base Layer", value: "Crew Neck T-Shirt" },
@@ -26,7 +26,7 @@ const stylingDB = [
     id: 2,
     title: "Relaxed Denim, Beige Pants",
     desc: "Effortless weekend style combining a vintage wash denim jacket with comfortable beige chinos. The look is grounded with dark leather boots for a rugged touch.",
-    img: "https://images.unsplash.com/photo-1542842400-0e7d5893e387?w=800&q=80",
+    img: "https://images.unsplash.com/photo-1714423297888-a7feda3773c6?w=800&q=80",
     attrs: [
       { label: "Outerwear", value: "Vintage Wash Trucker" },
       { label: "Bottoms", value: "Wide Leg Chinos" },
@@ -37,7 +37,7 @@ const stylingDB = [
     id: 3,
     title: "Denim & Pleated Khaki",
     desc: "A smart-casual blend. The structure of the denim jacket contrasts perfectly with the soft pleats of the khaki trousers.",
-    img: "https://images.unsplash.com/photo-1617137968427-85924c809a10?w=800&q=80",
+    img: "https://images.unsplash.com/photo-1612454500260-889aaebed747?w=800&q=80",
     attrs: [
       { label: "Jacket", value: "Light Wash Denim" },
       { label: "Pants", value: "High Waisted Pleated" },
@@ -66,7 +66,7 @@ const stylingDB = [
   {
     id: 102,
     title: "Contrast Layering",
-    img: "https://images.unsplash.com/photo-1617137968427-85924c809a10?w=800",
+    img: "https://images.unsplash.com/photo-1621423673985-55010b372463?w=800",
     desc: "Layering guide.",
     attrs: [{ label: "Style", value: "Layering" }]
   },
@@ -92,7 +92,7 @@ const upcyclingDB = [
   {
     title: "Denim Jacket Cuff with Sweater Patchwork",
     heroImg:
-      "https://images.unsplash.com/photo-1542272617-08f086303b96?w=800&q=80",
+      "https://images.unsplash.com/photo-1660166445759-c69bb6e7f004?w=600&q=80",
     steps: [
       {
         title: "Step 1: Prepare and Cut Knit Fabric",
@@ -113,7 +113,7 @@ const upcyclingDB = [
         title: "Step 3: Stitch and Secure",
         text: "Machine or hand-sew the knit patch securely to the denim cuff, stitching along both the top and bottom edges. Finally, press the finished cuff flat.",
         imgs: [
-          "https://images.unsplash.com/photo-1520412092562-1e61229183b7?w=800"
+          "https://images.unsplash.com/photo-1660166445759-c69bb6e7f004?w=600&q=80"
         ]
       }
     ]
@@ -121,28 +121,28 @@ const upcyclingDB = [
   {
     title: "DIY Denim Tote from Old Jeans",
     heroImg:
-      "https://images.unsplash.com/photo-1590874102058-592535d7885e?w=800&q=80",
+      "https://images.unsplash.com/photo-1683148754073-cfa906017a10?w=400&q=80",
     steps: [
       {
         title: "Step 1: Cut the Legs",
         text: "Cut the legs off your old jeans just below the crotch area. Save the top part for the body of the bag.",
         imgs: [
           "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400",
-          "https://images.unsplash.com/photo-1475179597420-669e6a18763e?w=400"
+          "https://images.unsplash.com/photo-1714143136372-ddaf8b606da7?w=400"
         ]
       },
       {
         title: "Step 2: Sew the Bottom",
         text: "Turn the jeans inside out and sew a strong straight stitch across the cut leg openings to close the bottom of the bag.",
         imgs: [
-          "https://images.unsplash.com/photo-1559563458-52c69f8f1f66?w=800"
+          "https://images.unsplash.com/photo-1734453195022-b0cbc53229ee?w=800"
         ]
       },
       {
         title: "Step 3: Add Straps",
         text: "Use the leftover leg fabric to create two long straps. Attach them securely to the waistband of the jeans.",
         imgs: [
-          "https://images.unsplash.com/photo-1591369292813-db2910b80f1b?w=800"
+          "https://images.unsplash.com/photo-1683148754073-cfa906017a10?w=400&q=80"
         ]
       }
     ]
@@ -150,13 +150,13 @@ const upcyclingDB = [
   {
     title: "Create a Patchwork Cushion",
     heroImg:
-      "https://images.unsplash.com/photo-1584100936595-c0654b55a2e6?w=800&q=80",
+      "https://images.unsplash.com/photo-1730719500613-abd184fc0932?w=800&q=80",
     steps: [
       {
         title: "Step 1: Gather Scraps",
         text: "Collect various denim scraps. Cut them into equal-sized squares, about 5x5 inches each.",
         imgs: [
-          "https://images.unsplash.com/photo-1605763240004-7e93b172d754?w=400",
+          "https://images.unsplash.com/photo-1550697318-16817b2dab3b?w=400",
           "https://images.unsplash.com/photo-1582719188393-bb71ca45dbb9?w=400"
         ]
       },
@@ -200,7 +200,7 @@ const upcyclingDB = [
         title: "Step 1: Measure Pot",
         text: "Wrap a piece of denim around your plant pot to determine the length needed, adding 1 inch for seam allowance.",
         imgs: [
-          "https://images.unsplash.com/photo-1599596956247-4187284b3d8d?w=800"
+          "https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=600&q=80"
         ]
       },
       {

@@ -9,14 +9,14 @@ const myPosts = [
   {
     id: 1,
     title: "Denim tote",
-    img: "https://images.unsplash.com/photo-1590874102058-592535d7885e?w=400&q=80",
+    img: "https://images.unsplash.com/photo-1683148754073-cfa906017a10?w=400&q=80",
     user: "Anna",
     avatar: "https://randomuser.me/api/portraits/women/44.jpg"
   },
   {
     id: 2,
     title: "Denim Jacket Cuff with Sweater Patchwork",
-    img: "https://images.unsplash.com/photo-1542272617-08f086303b96?w=400&q=80",
+    img: "https://images.unsplash.com/photo-1660166445759-c69bb6e7f004?w=400&q=80",
     user: "Anna",
     avatar: "https://randomuser.me/api/portraits/women/44.jpg"
   },

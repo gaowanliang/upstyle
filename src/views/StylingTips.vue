@@ -20,19 +20,19 @@ const allData = [
     id: 1,
     title: "Denim & Black Trousers Clean Outfit",
     category: "Casual",
-    img: "https://images.unsplash.com/photo-1512760206180-2d09c30f40f0?w=600&q=80" // 牛仔外套+黑裤
+    img: "https://images.unsplash.com/photo-1587664289285-e6fb47cbe370?w=600&q=80" // 牛仔外套+黑裤
   },
   {
     id: 2,
     title: "Relaxed Denim, Beige Pants",
     category: "Casual",
-    img: "https://images.unsplash.com/photo-1542842400-0e7d5893e387?w=600&q=80" // 牛仔+米色裤
+    img: "https://images.unsplash.com/photo-1637264546948-f00b2b9b2ed7?w=600&q=80" // 牛仔+米色裤
   },
   {
     id: 3,
     title: "Denim & Pleated Khaki",
     category: "Outdoor",
-    img: "https://images.unsplash.com/photo-1617137968427-85924c809a10?w=600&q=80" // 全身牛仔/工装
+    img: "https://images.unsplash.com/photo-1530856021941-02c71be5926f?w=600&q=80" // 全身牛仔/工装
   },
   {
     id: 4,
