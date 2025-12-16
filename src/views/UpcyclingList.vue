@@ -1,67 +1,96 @@
 <script setup>
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { ArrowLeft, Heart } from "lucide-vue-next";
+import { useSimpleToast } from "../composables/useSimpleToast";
+
+// 导入本地图片
+import imgTote from "@/assets/production/Upcycling guides/Denim tote.webp";
+import imgJacket from "@/assets/production/Upcycling guides/Denim Jacket Cuff with Sweater Patchwork.webp";
+import imgPocket from "@/assets/production/Upcycling guides/Denim pocket organizer.webp";
+import imgHair from "@/assets/production/Upcycling guides/Hair Accessories .webp";
+import imgWallet from "@/assets/production/Upcycling guides/Denim wallet.webp";
+import imgBag from "@/assets/production/Upcycling guides/Vintage denim bag.webp";
 
 const router = useRouter();
+const { triggerToast } = useSimpleToast();
 
-// 模拟图片中的数据
-const guides = [
+// 使用 ref 定义数据，以便修改 liked 状态
+const guides = ref([
   {
-    id: 1,
+    id: 201,
     title: "Denim tote",
     user: "W CONCEPT",
     avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-    img: "https://images.unsplash.com/photo-1683148754073-cfa906017a10?w=400&q=80",
-    badge: null
+    img: imgTote,
+    badge: null,
+    liked: false
   },
   {
-    id: 2,
+    id: 202,
     title: "Denim Jacket Cuff with Sweater Patchwork",
     user: "Estella Pacocha",
     avatar: "https://randomuser.me/api/portraits/women/68.jpg",
-    img: "https://images.unsplash.com/photo-1660166445759-c69bb6e7f004?w=600&q=80",
-    badge: null
+    img: imgJacket,
+    badge: null,
+    liked: false
   },
   {
-    id: 3,
+    id: 203,
     title: "Denim pocket organizer",
     user: "Amara",
     avatar: "https://randomuser.me/api/portraits/women/33.jpg",
-    img: "https://images.unsplash.com/photo-1762083589001-eb5591b3fb17?w=600&q=80", // 类似收纳袋
-    badge: null
+    img: imgPocket,
+    badge: null,
+    liked: false
   },
   {
-    id: 4,
+    id: 204,
     title: "Hair Accessories",
     user: "Raw",
     avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-    img: "https://images.unsplash.com/photo-1627384113743-6bd5a479fffd?w=600&q=80", // 发圈
-    badge: "Beginner friendly"
+    img: imgHair,
+    badge: "Beginner friendly",
+    liked: false
   },
   {
-    id: 5,
+    id: 205,
     title: "Denim wallet",
     user: "Murzka",
     avatar: "https://randomuser.me/api/portraits/women/12.jpg",
-    img: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=600&q=80", // 钱包
-    badge: "Beginner friendly"
+    img: imgWallet,
+    badge: "Beginner friendly",
+    liked: false
   },
   {
-    id: 6,
+    id: 206,
     title: "Vintage denim bag",
     user: "Annabelle Beer",
     avatar: "https://randomuser.me/api/portraits/women/65.jpg",
-    img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&q=80", // 抽绳包
-    badge: null
+    img: imgBag,
+    badge: null,
+    liked: false
   }
-];
+]);
 
-const goToDetail = (id) => router.push(`/detail/${id}`);
+// 卡片点击逻辑：只有 202 能进，其他拦截
+const handleCardClick = (item) => {
+  if (item.id === 202) {
+    router.push(`/detail/${item.id}`);
+  } else {
+    triggerToast("Coming soon...");
+  }
+};
+
+// 点赞逻辑
+const toggleLike = (item) => {
+  item.liked = !item.liked;
+  triggerToast(item.liked ? "Added to favorites" : "Removed from favorites");
+};
 </script>
 
 <template>
   <div class="page-content">
-    <!-- 顶部导航 -->
     <header class="nav-header">
       <button class="back-btn" @click="router.back()">
         <ArrowLeft :size="24" color="#1A202C" />
@@ -70,37 +99,35 @@ const goToDetail = (id) => router.push(`/detail/${id}`);
       <div class="placeholder"></div>
     </header>
 
-    <!-- 瀑布流列表 -->
     <div class="masonry-grid">
       <div
         v-for="item in guides"
         :key="item.id"
         class="grid-card"
-        @click="goToDetail(item.id)"
+        @click="handleCardClick(item)"
       >
-        <!-- 图片区域 -->
         <div class="img-wrapper">
           <img :src="item.img" loading="lazy" />
 
-          <!-- 右上角收藏按钮 -->
-          <div class="heart-badge">
-            <Heart :size="18" color="white" />
+          <!-- 爱心按钮 -->
+          <div class="heart-badge" @click.stop="toggleLike(item)">
+            <Heart
+              :size="18"
+              :fill="item.liked ? '#E53E3E' : 'none'"
+              :color="item.liked ? '#E53E3E' : 'white'"
+            />
           </div>
 
-          <!-- 右下角标签 (如果有) -->
           <div v-if="item.badge" class="level-pill">
             {{ item.badge }}
           </div>
         </div>
 
-        <!-- 信息区域 -->
         <div class="card-info">
-          <!-- 用户信息 -->
           <div class="user-row">
             <img :src="item.avatar" class="avatar" />
             <span class="username">{{ item.user }}</span>
           </div>
-          <!-- 标题 -->
           <h3 class="item-title">{{ item.title }}</h3>
         </div>
       </div>
@@ -110,12 +137,10 @@ const goToDetail = (id) => router.push(`/detail/${id}`);
 
 <style scoped>
 .page-content {
-  background: #fafafa; /* 浅灰底色 */
+  background: #fafafa;
   min-height: 100vh;
   padding: 0 20px 40px 20px;
 }
-
-/* Nav Header */
 .nav-header {
   display: flex;
   align-items: center;
@@ -145,12 +170,10 @@ const goToDetail = (id) => router.push(`/detail/${id}`);
   width: 44px;
 }
 
-/* Masonry Layout */
 .masonry-grid {
   column-count: 2;
   column-gap: 16px;
 }
-
 .grid-card {
   break-inside: avoid;
   background: white;
@@ -165,39 +188,35 @@ const goToDetail = (id) => router.push(`/detail/${id}`);
   transform: scale(0.98);
 }
 
-/* Image Area */
 .img-wrapper {
   position: relative;
   background: #f4f4f4;
-  /* 图片高度自适应，但为了美观通常不设固定高，由图片决定 */
 }
 .img-wrapper img {
   width: 100%;
   display: block;
 }
-
-/* Heart Badge (Top Right) */
 .heart-badge {
   position: absolute;
   top: 10px;
   right: 10px;
   width: 30px;
   height: 30px;
-  background: rgba(0, 0, 0, 0.4); /* 半透明黑底 */
+  background: rgba(0, 0, 0, 0.4);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(2px);
+  z-index: 10;
+  cursor: pointer;
 }
-
-/* Level Pill (Bottom Right) */
 .level-pill {
   position: absolute;
   bottom: 10px;
   right: 10px;
-  background: #e8efe9; /* 浅鼠尾草绿 */
-  color: #5f7a63; /* 深鼠尾草绿文字 */
+  background: #e8efe9;
+  color: #5f7a63;
   font-size: 10px;
   font-weight: 600;
   padding: 4px 10px;
@@ -205,11 +224,9 @@ const goToDetail = (id) => router.push(`/detail/${id}`);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Card Info */
 .card-info {
   padding: 12px;
 }
-
 .user-row {
   display: flex;
   align-items: center;
@@ -227,7 +244,6 @@ const goToDetail = (id) => router.push(`/detail/${id}`);
   color: #888;
   font-weight: 500;
 }
-
 .item-title {
   font-size: 13px;
   font-weight: 700;

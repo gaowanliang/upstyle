@@ -1,8 +1,10 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { Copy, Sparkles, Scissors } from "lucide-vue-next";
+import { ArrowLeft, Copy, Sparkles, Scissors } from "lucide-vue-next";
 import { ref } from "vue";
-import BrandLogo from "../components/BrandLogo.vue"; // 新增
+
+// 引入本地产品图片
+import productImg from "@/assets/production/product.webp";
 
 const route = useRoute();
 const router = useRouter();
@@ -22,19 +24,19 @@ const goUpcycling = () => router.push("/upcycling-list");
 
 <template>
   <div class="page-content">
-    <!-- 顶部LOGO，点击返回首页 -->
-    <header class="logo-header">
-      <button class="logo-btn" @click="goHome">
-        <BrandLogo :size="32" :showText="true" color="#5F7A63" />
+    <!-- 顶部导航 -->
+    <header class="top-nav">
+      <button class="back-btn" @click="goHome">
+        <ArrowLeft :size="24" color="#1A202C" />
       </button>
+      <h1 class="page-title">Product</h1>
+      <div class="placeholder"></div>
     </header>
 
     <!-- 产品大图 -->
     <div class="product-display">
-      <img
-        src="https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&q=80"
-        alt="Denim Jacket"
-      />
+      <!-- 使用本地图片变量 -->
+      <img :src="productImg" alt="Denim Jacket" />
     </div>
 
     <!-- 产品 ID -->
@@ -50,7 +52,6 @@ const goUpcycling = () => router.push("/upcycling-list");
 
     <!-- 功能按钮组 -->
     <div class="action-buttons">
-      <!-- 左侧按钮：圆在左下角 -->
       <div class="card-btn styling" @click="goStyling">
         <div class="bg-shape circle-bl"></div>
         <div class="card-content">
@@ -59,7 +60,6 @@ const goUpcycling = () => router.push("/upcycling-list");
         </div>
       </div>
 
-      <!-- 右侧按钮：圆在右上角 -->
       <div class="card-btn upcycling" @click="goUpcycling">
         <div class="bg-shape circle-tr"></div>
         <div class="card-content">
@@ -80,25 +80,37 @@ const goUpcycling = () => router.push("/upcycling-list");
   padding: 0 24px;
 }
 
-/* 顶部LOGO样式 */
-.logo-header {
+/* Top Nav */
+.top-nav {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: space-between;
   height: 60px;
   margin-top: 10px;
   margin-bottom: 20px;
 }
-.logo-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+.back-btn {
+  width: 44px;
+  height: 44px;
+  background: white;
+  border-radius: 50%;
+  border: 1px solid #f0f0f0;
   display: flex;
   align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+.page-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a202c;
+}
+.placeholder {
+  width: 44px;
 }
 
-/* 产品大图 */
+/* Product Display */
 .product-display {
   flex: 1;
   display: flex;
@@ -107,8 +119,8 @@ const goUpcycling = () => router.push("/upcycling-list");
   margin-bottom: 20px;
 }
 .product-display img {
-  width: 80%;
-  max-width: 300px;
+  width: 90%;
+  max-width: 340px;
   height: auto;
   object-fit: contain;
   filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.1));

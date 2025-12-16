@@ -2,72 +2,70 @@
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { ArrowLeft, Heart, SlidersHorizontal } from "lucide-vue-next";
+import { useSimpleToast } from "../composables/useSimpleToast"; // 修正引入
+
+// 导入本地图片
+import img1 from "@/assets/production/Styling tips/Denim & Black Trousers Clean Outfit.webp";
+import img2 from "@/assets/production/Styling tips/Relaxed Denim, Beige Pants.webp";
+import img3 from "@/assets/production/Styling tips/Denim & Pleated Khaki.webp";
+import img4 from "@/assets/production/Styling tips/Jacket & Navy Tones.webp";
 
 const router = useRouter();
-const activeCat = ref("All");
-const categories = [
-  "All",
-  "Casual",
-  "Outdoor",
-  "Professional",
-  "Party",
-  "Vintage"
-];
+const { triggerToast } = useSimpleToast(); // 使用弹窗控制器
 
-// 模拟数据 (模拟图中展示的男士牛仔穿搭)
-const allData = [
+const activeCat = ref("All");
+const categories = ["All", "Casual", "Outdoor", "Professional"];
+
+// 使用 ref 包裹数据，以便动态修改 liked 状态
+const allData = ref([
   {
     id: 1,
     title: "Denim & Black Trousers Clean Outfit",
     category: "Casual",
-    img: "https://images.unsplash.com/photo-1587664289285-e6fb47cbe370?w=600&q=80" // 牛仔外套+黑裤
+    img: img1,
+    liked: false // 本地状态
   },
   {
     id: 2,
     title: "Relaxed Denim, Beige Pants",
     category: "Casual",
-    img: "https://images.unsplash.com/photo-1637264546948-f00b2b9b2ed7?w=600&q=80" // 牛仔+米色裤
+    img: img2,
+    liked: false
   },
   {
     id: 3,
     title: "Denim & Pleated Khaki",
     category: "Outdoor",
-    img: "https://images.unsplash.com/photo-1530856021941-02c71be5926f?w=600&q=80" // 全身牛仔/工装
+    img: img3,
+    liked: false
   },
   {
     id: 4,
     title: "Jacket & Navy Tones",
     category: "Professional",
-    img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&q=80" // 蓝色系
-  },
-  {
-    id: 5,
-    title: "Layered Hoodie Style",
-    category: "Casual",
-    img: "https://images.unsplash.com/photo-1515555230216-82228b88ea98?w=600&q=80"
-  },
-  {
-    id: 6,
-    title: "Smart Casual Look",
-    category: "Professional",
-    img: "https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=600&q=80"
+    img: img4,
+    liked: false
   }
-];
+]);
 
-// 筛选逻辑
 const currentItems = computed(() => {
-  if (activeCat.value === "All") return allData;
-  return allData.filter((item) => item.category === activeCat.value);
+  if (activeCat.value === "All") return allData.value;
+  return allData.value.filter((item) => item.category === activeCat.value);
 });
 
 const goToDetail = (id) => {
   router.push(`/detail/${id}`);
 };
+
+// 本地切换逻辑
+const toggleLike = (item) => {
+  item.liked = !item.liked;
+  triggerToast(item.liked ? "Added to favorites" : "Removed from favorites");
+};
 </script>
 
 <template>
   <div class="page-content">
-    <!-- 1. 顶部导航 -->
     <header class="top-nav">
       <button class="back-btn" @click="router.back()">
         <ArrowLeft :size="24" color="#1A202C" />
@@ -76,7 +74,6 @@ const goToDetail = (id) => {
       <div class="placeholder"></div>
     </header>
 
-    <!-- 2. 筛选栏 (胶囊 + 筛选图标) -->
     <div class="filter-section">
       <div class="chips-scroll">
         <button
@@ -89,9 +86,11 @@ const goToDetail = (id) => {
           {{ cat }}
         </button>
       </div>
+      <button class="filter-icon-btn">
+        <SlidersHorizontal :size="20" color="#333" />
+      </button>
     </div>
 
-    <!-- 3. 瀑布流列表 -->
     <div class="masonry-grid">
       <transition-group name="fade">
         <div
@@ -102,10 +101,17 @@ const goToDetail = (id) => {
         >
           <div class="img-wrapper">
             <img :src="item.img" loading="lazy" />
-            <!-- 爱心收藏按钮 -->
-            <button class="heart-btn" @click.stop>
-              <Heart :size="18" color="white" />
+
+            <!-- 修正后的点击事件 -->
+            <button class="heart-btn" @click.stop="toggleLike(item)">
+              <Heart
+                :size="18"
+                :fill="item.liked ? '#E53E3E' : 'none'"
+                :color="item.liked ? '#E53E3E' : 'white'"
+              />
             </button>
+
+            <div class="sparkle-decor">✦</div>
           </div>
 
           <div class="card-info">
@@ -123,8 +129,6 @@ const goToDetail = (id) => {
   min-height: 100vh;
   padding: 0 20px 40px 20px;
 }
-
-/* --- Top Nav --- */
 .top-nav {
   display: flex;
   align-items: center;
@@ -154,7 +158,6 @@ const goToDetail = (id) => {
   width: 44px;
 }
 
-/* --- Filter Section --- */
 .filter-section {
   display: flex;
   align-items: center;
@@ -166,13 +169,12 @@ const goToDetail = (id) => {
   gap: 10px;
   overflow-x: auto;
   flex: 1;
-  padding-bottom: 4px; /* 防止滚动条遮挡 */
-  scrollbar-width: none; /* Firefox */
+  padding-bottom: 4px;
+  scrollbar-width: none;
 }
 .chips-scroll::-webkit-scrollbar {
   display: none;
-} /* Chrome/Safari */
-
+}
 .chip {
   padding: 8px 20px;
   border-radius: 20px;
@@ -183,17 +185,14 @@ const goToDetail = (id) => {
   transition: all 0.2s;
   border: none;
 }
-/* 选中态：深绿背景白字 */
 .chip.active {
   background: #5f7a63;
   color: white;
 }
-/* 未选中态：浅绿背景深字 */
 .chip:not(.active) {
   background: #e8efe9;
   color: #768e73;
 }
-
 .filter-icon-btn {
   width: 40px;
   height: 40px;
@@ -207,7 +206,6 @@ const goToDetail = (id) => {
   flex-shrink: 0;
 }
 
-/* --- Masonry Grid --- */
 .masonry-grid {
   column-count: 2;
   column-gap: 16px;
@@ -222,7 +220,6 @@ const goToDetail = (id) => {
   cursor: pointer;
   border: 1px solid #f7f7f7;
 }
-
 .img-wrapper {
   position: relative;
   background: #f4f4f4;
@@ -232,8 +229,6 @@ const goToDetail = (id) => {
   width: 100%;
   display: block;
 }
-
-/* 悬浮爱心 */
 .heart-btn {
   position: absolute;
   top: 10px;
@@ -247,9 +242,9 @@ const goToDetail = (id) => {
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(4px);
+  cursor: pointer;
+  z-index: 10;
 }
-
-/* 右下角装饰 */
 .sparkle-decor {
   position: absolute;
   bottom: 8px;
@@ -257,7 +252,6 @@ const goToDetail = (id) => {
   color: rgba(255, 255, 255, 0.7);
   font-size: 16px;
 }
-
 .card-info {
   padding: 12px;
 }
@@ -268,8 +262,6 @@ const goToDetail = (id) => {
   line-height: 1.4;
   margin: 0;
 }
-
-/* 动画 */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;
